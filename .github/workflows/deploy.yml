@@ -46,8 +46,8 @@ jobs:
           username: ${{ env.AWS_USER }}
           key: ${{ env.AWS_SSH_KEY }}
           script: |
-            cd git-action-test/
-            sed -i 's|image:.*|image: '"${{ env.DOCKER_REPO }}:latest"'|' docker-compose.yaml
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
+            docker stop Block-Guard-AI || true
+            docker rm Block-Guard-AI || true
+
+            docker pull "${{ env.DOCKER_REPO }}:latest"
+            docker run -d --name "Block-Guard-AI" -p 8000:8000 ${{ env.DOCKER_REPO }}:latest
