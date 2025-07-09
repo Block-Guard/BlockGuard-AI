@@ -46,8 +46,13 @@ jobs:
           username: ${{ env.AWS_USER }}
           key: ${{ env.AWS_SSH_KEY }}
           script: |
-            docker stop Block-Guard-AI || true
-            docker rm Block-Guard-AI || true
+            docker login -u ${{ env.DOCKER_HUB_USERNAME }} -p ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
+
+            # 기존 컨테이너가 있다면 중지 및 제거
+            if docker ps -a | grep -q "Block-Guard-AI"; then
+              docker stop Block-Guard-AI || true
+              docker rm Block-Guard-AI || true
+            fi
 
             docker pull "${{ env.DOCKER_REPO }}:latest"
             docker run -d --name "Block-Guard-AI" -p 8000:8000 ${{ env.DOCKER_REPO }}:latest
