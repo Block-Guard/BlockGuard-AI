@@ -4,6 +4,9 @@ FROM python:3.9-slim
 # 2. 작업 디렉토리 생성
 WORKDIR /app
 
+# pip 업그레이드
+RUN pip install --upgrade pip
+
 # 3. 요구 사항 파일 복사
 COPY requirements.txt /app/
 
