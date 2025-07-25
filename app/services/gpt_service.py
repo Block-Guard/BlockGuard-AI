@@ -1,31 +1,26 @@
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 from app.config.setting import settings
+from app.prompts.fraud_prompts import get_fraud_detection_prompt
 
 client = OpenAI(
     api_key = settings.gpt_api_key
     )
 
-async def call_gpt():
+async def call_gpt(user_input: str):
+    messages = get_fraud_detection_prompt(user_input)
+    
     try:
         response = client.responses.create(
             model="gpt-4o-mini",
-            input=[
-                {
-                    "role": "developer",
-                    "content": "너는 사기분석 AI야. 사용자의 말을 토대로 사기 유형을 판단하고 그렇게 생각한 이유를 말해줘"
-                    # 추가적인 설정 추가
-                },
-                {
-                    "role": "user",
-                    "content": "나의 딸이 다른 번호로 연락이 와서 핸드폰 수리 요금을 이체해달라고 해."
-                }
-            ],
+            input = messages,
+            temperature = 0.5, # 생성된 텍스트의 무작위성을 결정
             max_output_tokens = 200
         )
-        print(response)
-    
+        print(response.output_text.strip())
+        
+    except OpenAIError as e:
+        raise RuntimeError(f"GPT API 호출 실패: {e}")
     except Exception as e:
-        return f"GPT API 호출 실패: {e}"
+        return f"서버 오류 발생: {e}"
 
-    # 파싱 필요
     return response.output_text.strip()

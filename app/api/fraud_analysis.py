@@ -1,12 +1,20 @@
 from fastapi import APIRouter, HTTPException
 from app.services.gpt_service import call_gpt
+from app.models.fraud_request import FraudRequest
+from app.models.fraud_response import FraudResponse
 
 router = APIRouter()
 
-@router.get("")
-async def fraud_analysis():
+@router.post(
+    "",
+    response_model=FraudResponse,
+    summary="사기 유형 분석"
+)
+async def fraud_analysis(request: FraudRequest):
     try:
-        answer = await call_gpt()
+        answer = await call_gpt(request.user_input)
+        response = FraudResponse.model_validate_json(answer)
+        return response
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    return {"result": answer}
+        raise HTTPException(status_code=500, detail=f"사기분석 실패: {e}")
