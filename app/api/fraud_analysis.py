@@ -6,13 +6,13 @@ from app.models.fraud_response import FraudResponse
 router = APIRouter()
 
 @router.post(
-    "",
+    path = "",
     response_model=FraudResponse,
     summary="사기 유형 분석"
 )
 async def fraud_analysis(request: FraudRequest):
     try:
-        answer = await call_gpt(request.user_input)
+        answer = await call_gpt(request)
         response = FraudResponse.model_validate_json(answer)
         return response
         

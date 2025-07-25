@@ -1,13 +1,17 @@
 from openai import OpenAI, OpenAIError
 from app.config.setting import settings
+from app.models.fraud_request import FraudRequest
 from app.prompts.fraud_prompts import get_fraud_detection_prompt
 
 client = OpenAI(
     api_key = settings.gpt_api_key
     )
 
-async def call_gpt(user_input: str):
-    messages = get_fraud_detection_prompt(user_input)
+async def call_gpt(request: FraudRequest):
+    messages = get_fraud_detection_prompt(
+        message_content = request.messageContent, 
+        additional_description = request.additionalDescription
+    )
     
     try:
         response = client.responses.create(
