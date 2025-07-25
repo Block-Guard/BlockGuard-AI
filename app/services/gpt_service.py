@@ -5,7 +5,7 @@ client = OpenAI(
     api_key = settings.gpt_api_key
     )
 
-async def call_gpt_with_image():
+async def call_gpt():
     try:
         response = client.responses.create(
             model="gpt-4o-mini",
