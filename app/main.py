@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import fraud_analysis
+from app.api import fraud_analysis
 
 app = FastAPI()
 
