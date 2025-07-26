@@ -32,7 +32,6 @@ def get_fraud_detection_prompt(
     assistant_content += (
         "이제 아래 입력을 같은 형식으로 분류하세요:\n"
     )
-    print(assistant_content)
 
     assistant = {
         "role": "assistant",
@@ -44,7 +43,7 @@ def get_fraud_detection_prompt(
         "content": (
             f"messageContent: '{message_content}'\n"
             f"additionalDescription: '{additional_description}'\n"
-            f"keywords: '{keywords}'\n"
+            f"keywords: {', '.join(keywords) if keywords else 'None'}\n"
             f"imageContent: '{image_content}'"
         )
     }

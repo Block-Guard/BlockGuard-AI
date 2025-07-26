@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 from typing import List
+from typing import Optional
 
 class FraudRequest(BaseModel):
-    messageContent: str
+    messageContent: Optional[str] = None
     keywords: List[str]
-    additionalDescription: str
-    imageContent: str
+    additionalDescription: Optional[str] = None
+    imageContent: Optional[str] = None

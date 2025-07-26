@@ -15,6 +15,7 @@ async def fraud_analysis(request: FraudRequest):
         answer = await call_gpt(request)
         response = FraudResponse.model_validate_json(answer)
         return response
-        
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=f"사기분석 실패: {e}") from e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"사기분석 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"응답 파싱 실패: {e}") from e
