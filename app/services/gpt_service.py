@@ -10,7 +10,9 @@ client = OpenAI(
 async def call_gpt(request: FraudRequest):
     messages = get_fraud_detection_prompt(
         message_content = request.messageContent, 
-        additional_description = request.additionalDescription
+        additional_description = request.additionalDescription,
+        keywords = request.keywords,
+        image_content = request.imageContent
     )
     
     try:
@@ -20,7 +22,7 @@ async def call_gpt(request: FraudRequest):
             temperature = 0.5, # 생성된 텍스트의 무작위성을 결정
             max_output_tokens = 200
         )
-        print(response.output_text.strip())
+        print(response)
         
     except OpenAIError as e:
         raise RuntimeError(f"GPT API 호출 실패: {e}")

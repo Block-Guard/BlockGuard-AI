@@ -1,9 +1,15 @@
 from typing import List, Dict
+from app.prompts.fraud_example import FraudExample
+from app.prompts.data.fraud_examples import FRAUD_EXAMPLES
 
 def get_fraud_detection_prompt(
     message_content: str,
-    additional_description: str
+    additional_description: str,
+    keywords: List[str],
+    image_content: str,
+    examples: List[FraudExample] = FRAUD_EXAMPLES
 ) -> List[Dict[str, str]]:
+    
     system = {
         "role": "system",
         "content": (
@@ -21,40 +27,42 @@ def get_fraud_detection_prompt(
         )
     }
 
+    example_lines = build_example_lines(examples)
+    assistant_content = "".join(example_lines)
+    assistant_content += (
+        "이제 아래 입력을 같은 형식으로 분류하세요:\n"
+    )
+    print(assistant_content)
+
     assistant = {
         "role": "assistant",
-        "content": (
-            "사기 유형 및 예시:\n\n"
-            "1. 피싱:\n"
-            "   messageContent: '귀하의 계정이 잠길 수 있습니다. 비밀번호를 확인하려면 여기를 클릭하세요.'\n"
-            "   additionalDescription: '늦은 밤, 낯선 번호로 온 SMS를 우연히 열어보았습니다.'\n"
-            "   출력 JSON 예시:\n"
-            "   {\n"
-            "     \"estimatedFraudType\": \"피싱\",\n"
-            "     \"keywords\": [\"계정이 잠길\", \"비밀번호 확인\"],\n"
-            "     \"explanation\": \"긴급성을 조성하며 비밀번호 확인 링크를 제공하는 전형적인 피싱 패턴입니다.\",\n"
-            "     \"score\": 88.5\n"
-            "   }\n\n"
-            "2. 투자 사기:\n"
-            "   messageContent: '2주 만에 30% 수익 보장! 지금 투자하세요.'\n"
-            "   additionalDescription: '점심시간 카페에서 친구가 공유한 링크를 클릭했습니다.'\n"
-            "   출력 JSON 예시:\n"
-            "   {\n"
-            "     \"estimatedFraudType\": \"투자 사기\",\n"
-            "     \"keywords\": [\"30% 수익 보장\", \"지금 투자\"],\n"
-            "     \"explanation\": \"높은 수익을 짧은 기간에 보장한다는 과장된 약속이 전형적인 투자 사기 신호입니다.\",\n"
-            "     \"score\": 90.2\n"
-            "   }\n\n"
-            "이제 다음 입력을 같은 형식으로 분류하세요:\n"
-        )
+        "content": assistant_content
     }
 
     user = {
         "role": "user",
         "content": (
             f"messageContent: '{message_content}'\n"
-            f"additionalDescription: '{additional_description}'"
+            f"additionalDescription: '{additional_description}'\n"
+            f"keywords: '{keywords}'\n"
+            f"imageContent: '{image_content}'"
         )
     }
 
     return [system, assistant, user]
+
+def build_example_lines(examples):
+    example_lines = ["사기 유형 및 예시:\n"]
+    for idx, ex in enumerate(examples, start=1):
+        example_lines.append(f"{idx}. {ex.type_name}:\n")
+        example_lines.append(f"   messageContent: '{ex.message_content}'\n")
+        example_lines.append(f"   additionalDescription: '{ex.additional_description}'\n")
+        example_lines.append(f"   keywords: '{ex.keywords}'\n")
+        example_lines.append(f"   imageContent: '{ex.image_content}'\n")
+        example_lines.append("   출력 JSON 예시:\n")
+        example_lines.append(
+            f"   {{\"estimatedFraudType\": \"{ex.type_name}\", "
+            f"\"keywords\": [...], \"explanation\": \"...\", \"score\": ...}}\n\n"
+        )
+        
+    return example_lines
