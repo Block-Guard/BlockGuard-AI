@@ -14,7 +14,7 @@ def get_fraud_detection_prompt(
         "role": "system",
         "content": (
             "당신은 사기 탐지 어시스턴트입니다. "
-            "입력된 텍스트를 반드시 미리 정의된 사기 유형 중 하나로 분류하고, "
+            "입력된 텍스트를 반드시 예시 데이터로 입력된 사기 유형 중 하나로 분류하고, "
             "최소 1개에서 최대 3개의 주요 위험 키워드를 추출하며, 그 이유를 설명하고, "
             "위험 점수(0–100%)를 제공해야 합니다.\n"
             "출력은 반드시 valid JSON 객체로만 응답하세요. 아래는 응답 예시입니다:\n"
@@ -57,11 +57,5 @@ def build_example_lines(examples):
         example_lines.append(f"   messageContent: '{ex.message_content}'\n")
         example_lines.append(f"   additionalDescription: '{ex.additional_description}'\n")
         example_lines.append(f"   keywords: '{ex.keywords}'\n")
-        example_lines.append(f"   imageContent: '{ex.image_content}'\n")
-        example_lines.append("   출력 JSON 예시:\n")
-        example_lines.append(
-            f"   {{\"estimatedFraudType\": \"{ex.type_name}\", "
-            f"\"keywords\": [...], \"explanation\": \"...\", \"score\": ...}}\n\n"
-        )
         
     return example_lines
