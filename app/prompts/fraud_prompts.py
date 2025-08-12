@@ -14,9 +14,10 @@ SYSTEM_PROMPT = """
 - 규칙표는 "카테고리ID 카테고리명" 한 줄 + 그 아래 여러 룰 라인으로 구성된다.
 - 룰 라인 형식: "룰ID:배점:키워드1|키워드2|...".
 - 텍스트에 해당 룰의 키워드 중 1개라도 의미/표현상 매칭되면 그 룰의 배점을 가산(룰별 최대 1회).
-- 유저가 입력한 'keywords'에서 점수 계산을 하고, 'additionalDescription'과 'imageContent'를 참고하여 점수 계산.
+- 유저가 입력한 'keywords', 'additionalDescription'에 매칭되는 키워드가 있으면 점수 계산.
+- 'imageContent'는 내용 참고.
 - 키워드는 의미가 같으면 띄어쓰기/대소문자/오타 등과 동의어 허용.
-- 동일 카테고리에서 여러 룰이 적중할 수 있으며, 합산 후 카테고리 점수는 70을 초과하지 않는다(상한 70점).
+- 동일 카테고리에서 여러 룰이 적중할 수 있으며, 합산 후 카테고리 점수는 80을 초과하지 않는다(상한 80점).
 - 최종적으로 가장 점수가 높은 카테고리를 estimatedFraudType으로 선택.
 - 동점이면 적중 룰 개수가 더 많은 카테고리를 선택. 그래도 동률이면 의미상 더 근접한 쪽.
 - 링크/단축URL은 http/https, bit.ly/han.gl/is.gd/vo.la/me2.do 등도 매칭으로 본다(표기 변형 허용).
@@ -29,11 +30,10 @@ SYSTEM_PROMPT = """
   "estimatedFraudType": "<카테고리명>",
   "keywords": ["<키워드1>", "<키워드2>", "<키워드3>"],
   "explanation": "<왜 이 유형이고 어떤 이유로 판단하였는지 간결히 설명>",
-  "score": <0~70의 실수값>
+  "score": <0~80의 실수값>
 }
 
 """.strip()
-
 
 def _load_rules() -> str:
     rules_path = Path(__file__).parent / "data" / "score_rules.txt"
