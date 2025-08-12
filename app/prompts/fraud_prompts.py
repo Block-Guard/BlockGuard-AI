@@ -1,6 +1,43 @@
 from typing import List, Dict
+from pathlib import Path
 from app.prompts.fraud_example import FraudExample
 from app.prompts.data.fraud_examples import FRAUD_EXAMPLES
+
+SYSTEM_PROMPT = """
+너는 보이스피싱 사기 탐지 전문가다.
+다음 규칙표를 사용해 입력 텍스트를 분석하고,
+1) 사기 유형(카테고리) 선택
+2) 핵심 키워드(최소1~최대3) 추출
+3) 점수는 최소 0점에서 최대 70점
+
+[점수 규칙]
+- 규칙표는 "카테고리ID 카테고리명" 한 줄 + 그 아래 여러 룰 라인으로 구성된다.
+- 룰 라인 형식: "룰ID:배점:키워드1|키워드2|...".
+- 텍스트에 해당 룰의 키워드 중 1개라도 의미/표현상 매칭되면 그 룰의 배점을 가산(룰별 최대 1회).
+- 유저가 입력한 'keywords'에서 점수 계산을 하고, 'additionalDescription'과 'imageContent'를 참고하여 점수 계산.
+- 키워드는 의미가 같으면 띄어쓰기/대소문자/오타 등과 동의어 허용.
+- 동일 카테고리에서 여러 룰이 적중할 수 있으며, 합산 후 카테고리 점수는 70을 초과하지 않는다(상한 70점).
+- 최종적으로 가장 점수가 높은 카테고리를 estimatedFraudType으로 선택.
+- 동점이면 적중 룰 개수가 더 많은 카테고리를 선택. 그래도 동률이면 의미상 더 근접한 쪽.
+- 링크/단축URL은 http/https, bit.ly/han.gl/is.gd/vo.la/me2.do 등도 매칭으로 본다(표기 변형 허용).
+
+출력은 반드시 valid JSON 객체로만 응답. 오직 JSON만 출력. 
+코드블록(```), 주석, 추가 텍스트, 설명 모두 금지.
+'estimatedFraudType' 에는 오로지 카테고리명만 넣을 것.
+아래는 응답 예시.
+{
+  "estimatedFraudType": "<카테고리명>",
+  "keywords": ["<키워드1>", "<키워드2>", "<키워드3>"],
+  "explanation": "<왜 이 유형이고 어떤 이유로 판단하였는지 간결히 설명>",
+  "score": <0~70의 실수값>
+}
+
+""".strip()
+
+
+def _load_rules() -> str:
+    rules_path = Path(__file__).parent / "data" / "score_rules.txt"
+    return rules_path.read_text(encoding="utf-8")
 
 def get_fraud_detection_prompt(
     message_content: str,
@@ -9,33 +46,13 @@ def get_fraud_detection_prompt(
     image_content: str,
     examples: List[FraudExample] = FRAUD_EXAMPLES
 ) -> List[Dict[str, str]]:
-    
+    rules_text = _load_rules()
+    example_text = "".join(build_example_lines(examples))
+
+
     system = {
         "role": "system",
-        "content": (
-            "당신은 사기 탐지 어시스턴트입니다. "
-            "입력된 텍스트를 반드시 미리 정의된 사기 유형 중 하나로 분류하고, "
-            "최소 1개에서 최대 3개의 주요 위험 키워드를 추출하며, 그 이유를 설명하고, "
-            "위험 점수(0–100%)를 제공해야 합니다.\n"
-            "출력은 반드시 valid JSON 객체로만 응답하세요. 아래는 응답 예시입니다:\n"
-            "{\n"
-            "  \"estimatedFraudType\": \"복권 사기\",\n"
-            "  \"keywords\": [\"키워드1\", \"키워드2\"],\n"
-            "  \"explanation\": \"...\",\n"
-            "  \"score\": 92.4\n"
-            "}\n"
-        )
-    }
-
-    example_lines = build_example_lines(examples)
-    assistant_content = "".join(example_lines)
-    assistant_content += (
-        "이제 아래 입력을 같은 형식으로 분류하세요:\n"
-    )
-
-    assistant = {
-        "role": "assistant",
-        "content": assistant_content
+        "content": f"{SYSTEM_PROMPT}\n\n[규칙표]\n{rules_text}\n\n[예시]\n{example_text}"
     }
 
     user = {
@@ -48,7 +65,8 @@ def get_fraud_detection_prompt(
         )
     }
 
-    return [system, assistant, user]
+    return [system, user]
+
 
 def build_example_lines(examples):
     example_lines = ["사기 유형 및 예시:\n"]
@@ -57,11 +75,5 @@ def build_example_lines(examples):
         example_lines.append(f"   messageContent: '{ex.message_content}'\n")
         example_lines.append(f"   additionalDescription: '{ex.additional_description}'\n")
         example_lines.append(f"   keywords: '{ex.keywords}'\n")
-        example_lines.append(f"   imageContent: '{ex.image_content}'\n")
-        example_lines.append("   출력 JSON 예시:\n")
-        example_lines.append(
-            f"   {{\"estimatedFraudType\": \"{ex.type_name}\", "
-            f"\"keywords\": [...], \"explanation\": \"...\", \"score\": ...}}\n\n"
-        )
         
     return example_lines

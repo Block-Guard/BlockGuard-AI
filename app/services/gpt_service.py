@@ -22,7 +22,7 @@ async def call_gpt(request: FraudRequest):
         response = client.responses.create(
             model="gpt-4o-mini",
             input = messages,
-            temperature = 0.5, # 생성된 텍스트의 무작위성을 결정
+            temperature = 0.1, # 생성된 텍스트의 무작위성을 결정
             max_output_tokens = 200
         )
         logger.info(f"GPT API 호출 성공: {response}")
