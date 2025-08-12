@@ -56,7 +56,7 @@ CAT08 건강보험공단 사칭형
   D:10:확인바랍니다|조회하기|신청요망
   E:10:dokdo.in|nhisis.xyz|cloud|nhis|nhi|bit.ly|han.gl|is.gd|http|https
 
-CAT09 검찰 출석 요구형
+CAT09 경찰 출석 요구형
   A:30:검찰청|경찰서|법원|국정원
   B:10:출석요구서|소환장|사건조회번호
   C:10:형사소송건|민사소송|재산몰수 통지서
