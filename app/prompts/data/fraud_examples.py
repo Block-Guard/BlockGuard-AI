@@ -3,7 +3,7 @@ from app.prompts.fraud_prompts import FraudExample
 
 FRAUD_EXAMPLES: List[FraudExample] = [
     FraudExample(
-        type_name="기관사칭형",
+        type_name="기관 사칭형",
         message_content=[
             "[Web발신]\n[서울강북경찰서] 귀하의 사건\n[송치번호 : 2021-439857]호를\n서울북부지방검찰청으로 인계하였습니다.\n담당 검사가 지정되기까지 1~3일 소요될 수 있습니다.",
             "서울중앙지방검찰청 민원실\n수신인:\n문서번호: 중앙-2023-XXXX\n귀하 명의의 계좌가 명의도용으로 사용되어\n금융감독원으로부터 신고 접수되었습니다.\n관련 서류는 등기 발송하였으나 반송되어 본 고지로 대체하며 신속히 연락 주시기 바랍니다.\n연락처: 010-XXXX-XXXX",
@@ -29,7 +29,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="대출사기형",
+        type_name="대출 사기형",
         message_content=[
             "[Web발신]\nKB국민은행 고객님께 안내드립니다.\n정부지원 서민금융상품 신청 대상자로 선정되셨습니다.\n\n【상품 특징】\n최대 1,500만원, 금리 2.3%~5.2%\n무직자 가능, 신용등급 무관, 무서류 진행, 중도상환 수수료 없음\n대환대출, 생활안정자금 지원 가능\n\n【신청 방법】\n상담원 연결 후 1번 누르시면 접수 완료!\n대표번호 02-1577-XXXX\n※ 접수자 많을 시 상담 지연될 수 있습니다.",
             "[Web발신]\n안녕하세요, 현대캐피탈 박대리입니다.\n대출 진행을 위해 아래 서류 제출 바랍니다.\n\n신분증 사본\n등본, 초본\n재직증명서, 통장사본\n거래내역서 (주거래은행 3개월)\n※ 카카오톡으로 사진 전송 가능\n※ 아래 링크 통해 앱 설치 후 신청서 작성 부탁드립니다.\nhxxp://xxxxx.bank.top/신청앱.apk",
@@ -181,7 +181,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="검찰소환형",
+        type_name="검찰 소환형",
         message_content=[
             "[Web발신] [검찰청] 형사소송건과 관련하여 긴급출석요구가 발부되었습니다.\n사건번호: 13-093157 sc-police.co.kr/confirm",
             "[Web발신] ○○○님께 형사소송 관련 출석요구서가 발송되었습니다. 즉시 확인 바랍니다.\n xuto.tk/doc",
@@ -226,7 +226,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="알바/부업사기형",
+        type_name="알바/부업 사기형",
         message_content=[
             "[Web발신] 안녕하세요! 당사 유통사에서 상품 검수 및 단순 작업을 도와주실 분을 모집합니다. 하루 20분 작업, 일당 최대 14만원 지급. 카카오톡 open.kakao.com/abcd 로 문의주세요.",
             "[광고] 온라인 부업 모집! 나이/경력 무관, 하루 30분 휴대폰으로 간단한 수익 가능. 급여 당일 정산. 관심 있으시면 http://bit.ly/jobapply 로 접속하세요.",
@@ -361,7 +361,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="허위결제사기형",
+        type_name="허위결제 사기형",
         message_content=[
             "[Web발신] 아마존 해외결제 354,000원 승인완료. 본인 아닌 경우 즉시 신고 1544-XXXX",
             "[Web발신] 해외 승인 결제 요청: $299.99 / 본인 아닐 경우 http://checkpay.co.kr/verify",
@@ -380,7 +380,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="가족/지인사칭형",
+        type_name="가족/지인 사칭형",
         message_content=[
             "엄마 나 폰 액정 깨져서 수리 맡기고 급하게 문자나라로 문자하는 거야\n지금 급한 부탁 있어서 그래 문자 확인하면 답장 줘\n무슨 일이야?\n지금 기프트카드 필요한데 엄마가 먼저 20만원권 3장만 구매해줘",
             "아빠 폰 고장나서 임시로 문자하는 거야 급하게 부탁이 있어서\n보험 신청하려는데 내 폰 인증이 안돼서 아빠 명의로 진행해도 돼?\n민증이랑 카드 앞뒤 사진 보내줘\n알았어 보내줄게\n그리고 계좌번호랑 비번 4자리 필요해",
