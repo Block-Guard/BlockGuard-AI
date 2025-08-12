@@ -1,5 +1,5 @@
 from typing import List
-from app.prompts.fraud_prompts import FraudExample
+from app.prompts.fraud_example import FraudExample
 
 FRAUD_EXAMPLES: List[FraudExample] = [
     FraudExample(
