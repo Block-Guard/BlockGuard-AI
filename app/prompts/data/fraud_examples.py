@@ -3,7 +3,7 @@ from app.prompts.fraud_prompts import FraudExample
 
 FRAUD_EXAMPLES: List[FraudExample] = [
     FraudExample(
-        type_name="보이스피싱_기관 사칭형",
+        type_name="기관사칭형",
         message_content=[
             "[Web발신]\n[서울강북경찰서] 귀하의 사건\n[송치번호 : 2021-439857]호를\n서울북부지방검찰청으로 인계하였습니다.\n담당 검사가 지정되기까지 1~3일 소요될 수 있습니다.",
             "서울중앙지방검찰청 민원실\n수신인:\n문서번호: 중앙-2023-XXXX\n귀하 명의의 계좌가 명의도용으로 사용되어\n금융감독원으로부터 신고 접수되었습니다.\n관련 서류는 등기 발송하였으나 반송되어 본 고지로 대체하며 신속히 연락 주시기 바랍니다.\n연락처: 010-XXXX-XXXX",
@@ -29,7 +29,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="보이스피싱_대출 사기형",
+        type_name="대출사기형",
         message_content=[
             "[Web발신]\nKB국민은행 고객님께 안내드립니다.\n정부지원 서민금융상품 신청 대상자로 선정되셨습니다.\n\n【상품 특징】\n최대 1,500만원, 금리 2.3%~5.2%\n무직자 가능, 신용등급 무관, 무서류 진행, 중도상환 수수료 없음\n대환대출, 생활안정자금 지원 가능\n\n【신청 방법】\n상담원 연결 후 1번 누르시면 접수 완료!\n대표번호 02-1577-XXXX\n※ 접수자 많을 시 상담 지연될 수 있습니다.",
             "[Web발신]\n안녕하세요, 현대캐피탈 박대리입니다.\n대출 진행을 위해 아래 서류 제출 바랍니다.\n\n신분증 사본\n등본, 초본\n재직증명서, 통장사본\n거래내역서 (주거래은행 3개월)\n※ 카카오톡으로 사진 전송 가능\n※ 아래 링크 통해 앱 설치 후 신청서 작성 부탁드립니다.\nhxxp://xxxxx.bank.top/신청앱.apk",
@@ -56,7 +56,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="보이스피싱_카드사 사칭형",
+        type_name="카드사 사칭형",
         message_content=[
             "[Web발신] KB국민카드 승인불가\n본인 미신청 시 02-XXX-XXXX로 문의 바랍니다.",
             "[Web발신] 신한카드 개통완료.\n개통내용이 본인과 다를 경우 즉시 상담접수 바랍니다.",
@@ -79,7 +79,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name = "스미싱_경조사사칭_돌잔치 초대장형",
+        type_name = "돌잔치 초대장형",
         message_content = [
             "[Web발신] 저희 아들 첫돌 잔치에 초대합니다  모바일 초대장 oa.to/invite123",
             "[Web발신] 축하해주세요~ 우리 아이 돌잔치 초대장이 도착했어요 vo.to/happybaby",
@@ -99,7 +99,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_경조사사칭_모바일 청첩장형",
+        type_name="모바일 청첩장형",
         message_content=[
             "[Web발신] 안녕하세요~ 저 결혼합니다\n사랑의 결실을 맺게 되어 모바일 청첩장 보내드립니다 han.gl/wedding2025",
             "[Web발신] 청첩장이 도착했습니다.\nWedding Invitation c11.kr/loveyou\n참석해주시면 큰 기쁨이 될 거예요!",
@@ -119,7 +119,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_경조사사칭_부고 문자형",
+        type_name="부고문자형",
         message_content=[
             "[Web발신] 안타깝게도 부친께서 별세하셨습니다.\n부고 및 장례식장 안내 buly.kr/funeral123",
             "[Web발신] 삼가 고인의 명복을 빕니다.\n○○○님 모친상 부고 안내드립니다. 빈소 위치 확인 gg.gg/빈소위치",
@@ -139,7 +139,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_공공기관사칭형_범칙금-과태료 부과형",
+        type_name="범칙금/과태료 부과형",
         message_content=[
             "[Web발신] [도로교통공단] 정지선 위반으로 과태료가 부과되었습니다.\n자세한 고지서 확인 paso.mobilecar.pe.kr/warning",
             "[Web발신] 민원24에서 쓰레기 무단투기에 대한 민원이 접수되었습니다.\n내용 확인 homes-go.com/violation",
@@ -160,7 +160,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_공공기관사칭형_건강보험공단 사칭형",
+        type_name="건강보험공단 사칭형",
         message_content=[
             "[Web발신] [국민건강보험공단] 종합건강검진 통지서가 발송되었습니다.\n dokdo.in/healthcheck",
             "[Web발신] [건강지키미] 건강보험료 환급금 신청이 마감됩니다. 신청 요망 nhisis.xyz/refund",
@@ -181,7 +181,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_공공기관사칭형_검찰소환형",
+        type_name="검찰소환형",
         message_content=[
             "[Web발신] [검찰청] 형사소송건과 관련하여 긴급출석요구가 발부되었습니다.\n사건번호: 13-093157 sc-police.co.kr/confirm",
             "[Web발신] ○○○님께 형사소송 관련 출석요구서가 발송되었습니다. 즉시 확인 바랍니다.\n xuto.tk/doc",
@@ -204,7 +204,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_공공기관사칭형_국세청 사칭형",
+        type_name="국세청 사칭형",
         message_content=[
             "[Web발신] [국세청] 종합소득세 환급 대상자입니다. 환급금 수령을 위해 신청하세요 han.gl/refund123",
             "[Web발신] 홈택스 연말정산 환급금 내역 조회가 가능합니다. 확인 me2.do/taxcheck",
@@ -226,7 +226,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_알바_부업사기형",
+        type_name="알바/부업사기형",
         message_content=[
             "[Web발신] 안녕하세요! 당사 유통사에서 상품 검수 및 단순 작업을 도와주실 분을 모집합니다. 하루 20분 작업, 일당 최대 14만원 지급. 카카오톡 open.kakao.com/abcd 로 문의주세요.",
             "[광고] 온라인 부업 모집! 나이/경력 무관, 하루 30분 휴대폰으로 간단한 수익 가능. 급여 당일 정산. 관심 있으시면 http://bit.ly/jobapply 로 접속하세요.",
@@ -250,7 +250,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_정부지원금 위장형",
+        type_name="정부지원금 위장형",
         message_content=[
             "[Web발신] [고용노동부] 민생안정지원금 330,000원 지급 대상자입니다. 예산 소진 전 신청하세요 han.gl/abcd",
             "[Web발신] [중소벤처기업부] 방역지원금 신청마감 임박! 신청자에 한해 신속지급됩니다 bit.ly/abcd",
@@ -274,7 +274,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_택배사기형",
+        type_name="택배 사기형",
         message_content=[
             "[Web발신] [CJ대한통운] 배송지 오류로 인해 상품이 반송되었습니다. 주소 확인 bit.ly/배송확인",
             "[Web발신] 택배 배송이 지연되고 있습니다. 주소를 다시 입력해 주세요 han.gl/재확인",
@@ -295,7 +295,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_투자사기유형_가상화폐 사기형",
+        type_name="가상화폐 사기형",
         message_content=[
             "[Web발신] [Upbit] 귀하의 계정에서 해외IP 로그인이 감지되었습니다. 본인이 아닐 경우 즉시 확인 bit.ly/secure-eth",
             "[Web발신] [Binance] 잔여 ETH 소각 예정입니다. 소각 전 자산 복구를 원하시면 상담 요청 line.me/xyz123",
@@ -318,7 +318,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_투자사기유형_주식투자 사기형",
+        type_name="주식투자 사기형",
         message_content=[
             "[Web발신] 이번주 급등주 5개 공개! 가입 후 종목 수령하세요\n에넥스, 덕신하우징 등 급등 예상 종목\n수익률 최대 150% 보장, 손실 발생 시 전액 보상!\nhttps://bit.ly/vvipstock",
             "[Web발신] (광고) 2차전지 유망주 유진테크놀로지 특별공급 안내\nNH증권 주관, 상장 전 선착순 신청\n공모가 14,000원 공급가 6,000원\n수익 극대화 기회! 지금 신청하세요\nhttps://bit.ly/yujinipo",
@@ -341,7 +341,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_투자사기유형_청약 공모주 사기형",
+        type_name="청약 공모주 사기형",
         message_content=[
             "[Web발신]\n(광고) IPO 공모 청약 신청\n24년 첫 코스피 상장 APR에이피알(KOSPI)\n상장일정: 2024년 2월 26일\n주관사: 신한투자증권\n공모가: 250,000원 공급가: 70,000원\n청약 담당자: 010-8014-XXXX\n빠른회신 부탁드립니다.",
             "[Web발신]\n축하드립니다. 공모주 청약 당첨 안내\n두산로보틱스 10주 무상배정\n상장일: 2023년 10월 2일\n주관사: 미래에셋증권, 한국투자증권\n공모가: 25,000원 ~ 28,000원\n당첨자에 한해 순차적으로 안내 전화 드리겠습니다.",
@@ -361,7 +361,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="스미싱_허위결제사기형",
+        type_name="허위결제사기형",
         message_content=[
             "[Web발신] 아마존 해외결제 354,000원 승인완료. 본인 아닌 경우 즉시 신고 1544-XXXX",
             "[Web발신] 해외 승인 결제 요청: $299.99 / 본인 아닐 경우 http://checkpay.co.kr/verify",
@@ -380,7 +380,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="메신저_피싱_가족/지인사칭형",
+        type_name="가족/지인사칭형",
         message_content=[
             "엄마 나 폰 액정 깨져서 수리 맡기고 급하게 문자나라로 문자하는 거야\n지금 급한 부탁 있어서 그래 문자 확인하면 답장 줘\n무슨 일이야?\n지금 기프트카드 필요한데 엄마가 먼저 20만원권 3장만 구매해줘",
             "아빠 폰 고장나서 임시로 문자하는 거야 급하게 부탁이 있어서\n보험 신청하려는데 내 폰 인증이 안돼서 아빠 명의로 진행해도 돼?\n민증이랑 카드 앞뒤 사진 보내줘\n알았어 보내줄게\n그리고 계좌번호랑 비번 4자리 필요해",
