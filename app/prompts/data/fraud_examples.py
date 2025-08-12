@@ -181,7 +181,7 @@ FRAUD_EXAMPLES: List[FraudExample] = [
         ]
     ),
     FraudExample(
-        type_name="검찰 출석 요구형",
+        type_name="경찰 출석 요구형",
         message_content=[
             "[Web발신] [검찰청] 형사소송건과 관련하여 긴급출석요구가 발부되었습니다.\n사건번호: 13-093157 sc-police.co.kr/confirm",
             "[Web발신] ○○○님께 형사소송 관련 출석요구서가 발송되었습니다. 즉시 확인 바랍니다.\n xuto.tk/doc",
